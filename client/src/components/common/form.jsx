@@ -71,6 +71,12 @@ const CommonForm = ({
             placeholder={getControlItem.placeholder}
             id={getControlItem.id}
             value={value}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                [getControlItem.name]: e.target.value,
+              })
+            }
           />
         );
         break;
