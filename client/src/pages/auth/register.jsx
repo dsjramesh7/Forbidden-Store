@@ -11,6 +11,7 @@ const initialState = {
 
 const AuthRegister = () => {
   const [formData, setFormData] = useState(initialState);
+  console.log("FormDataRegister", formData);
 
   const submitForm = () => {};
   return (

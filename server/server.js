@@ -1,9 +1,9 @@
 require("dotenv").config();
-
 const mongoose = require("mongoose");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const AuthRouter = require("../server/routes/auth/auth-routes");
 
 const USERNAME = process.env.MONGO_USERNAME;
 const PASSWORD = process.env.MONGO_PASSWORD;
@@ -37,5 +37,6 @@ app.use(
 
 app.use(cookieParser());
 app.use(express.json());
+app.use("/api/auth", AuthRouter);
 
 app.listen(PORT, () => console.log(`Server is now running on port ${PORT}`));
