@@ -1,7 +1,10 @@
 import CommonForm from "@/components/common/form";
 import { registerFormControls } from "@/config";
+import { registerUserAction } from "@/redux/feature/auth-slice";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 
 const initialState = {
   userName: "",
@@ -10,10 +13,21 @@ const initialState = {
 };
 
 const AuthRegister = () => {
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialState);
   console.log("FormDataRegister", formData);
+  const navigate = useNavigate();
 
-  const submitForm = () => {};
+  const submitForm = (e) => {
+    e.preventDefault();
+    dispatch(registerUserAction(formData)).then((data) => {
+      if (data?.payload?.success) {
+        console.log("Data: ", data);
+        toast(data?.payload?.message);
+        navigate("/auth/login");
+      }
+    });
+  };
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
       <div className="text-center">
