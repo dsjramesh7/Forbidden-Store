@@ -7,6 +7,7 @@ const initialState = {
   user: null,
 };
 
+// register
 export const registerUserAction = createAsyncThunk(
   "/auth/register",
   async (formData) => {
@@ -22,6 +23,23 @@ export const registerUserAction = createAsyncThunk(
   }
 );
 
+// login
+export const loginUserAction = createAsyncThunk(
+  "/auth/login",
+  async (formData) => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
+// login and register extrareducers
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -39,6 +57,20 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       })
       .addCase(registerUserAction.rejected, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+      .addCase(loginUserAction.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUserAction.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        state.user = action.payload.success ? action.payload : null;
+        state.isAuthenticated = action.payload.success ? true : false;
+      })
+      .addCase(loginUserAction.rejected, (state) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;

@@ -15,16 +15,19 @@ const initialState = {
 const AuthRegister = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState(initialState);
-  console.log("FormDataRegister", formData);
+  // console.log("FormDataRegister", formData);
   const navigate = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
     dispatch(registerUserAction(formData)).then((data) => {
       if (data?.payload?.success) {
-        console.log("Data: ", data);
-        toast(data?.payload?.message);
+        // console.log("Data: ", data);
+        toast.success(data?.payload?.message);
         navigate("/auth/login");
+      } else {
+        console.log(data);
+        toast.error(data?.payload?.message);
       }
     });
   };
