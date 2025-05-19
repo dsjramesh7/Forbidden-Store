@@ -88,6 +88,14 @@ const loginUser = async (req, res) => {
   }
 };
 
+// logout
+const logOutUser = async (req, res) => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged out Successfully",
+  });
+};
+
 // Auth MiddleWare
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, logOutUser };
