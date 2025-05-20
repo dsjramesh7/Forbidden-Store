@@ -23,6 +23,9 @@ const App = () => {
   const { isAuthenticated, user, isLoading } = useSelector(
     (state) => state.auth
   );
+
+  // console.log("userRole", user?.user);
+  const userInfo = user?.user;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,6 +34,7 @@ const App = () => {
 
   if (isLoading)
     return <h1 className="text-red-500 font-bold text-4xl ">Loading.....</h1>;
+
   return (
     <div className="flex flex-col overflow-hidden bg-white">
       <Routes>
@@ -39,14 +43,14 @@ const App = () => {
           element={
             <CheckAuth
               isAuthenticated={isAuthenticated}
-              user={user}
+              user={userInfo}
             ></CheckAuth>
           }
         />
         <Route
           path="/auth"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticated} user={userInfo}>
               <AuthLayout />
             </CheckAuth>
           }
@@ -57,7 +61,7 @@ const App = () => {
         <Route
           path="/admin"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticated} user={userInfo}>
               <AdminViewLayout />
             </CheckAuth>
           }
@@ -70,7 +74,7 @@ const App = () => {
         <Route
           path="/shop"
           element={
-            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+            <CheckAuth isAuthenticated={isAuthenticated} user={userInfo}>
               <ShoppingHeader />
             </CheckAuth>
           }

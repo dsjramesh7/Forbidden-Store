@@ -39,6 +39,23 @@ export const loginUserAction = createAsyncThunk(
   }
 );
 
+// logout
+export const logoutUser = createAsyncThunk(
+  "/auth/logout",
+
+  async () => {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+
+    return response.data;
+  }
+);
+
 // check authentication
 export const checkAuthAction = createAsyncThunk("/auth/checkauth", async () => {
   const response = await axios.get(
