@@ -97,5 +97,24 @@ const logOutUser = async (req, res) => {
 };
 
 // Auth MiddleWare
+const authMiddleware = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token)
+    return res.status(401).json({
+      success: false,
+      message: "unauthorized user!",
+    });
 
-module.exports = { registerUser, loginUser, logOutUser };
+  try {
+    const decoded = jwt.verify(token, "CLIENT_SECRET_KEY");
+    req.user = decoded;
+    next();
+  } catch (error) {
+    res.status(401).json({
+      success: false,
+      message: "unauthorized user!",
+    });
+  }
+};
+
+module.exports = { registerUser, loginUser, logOutUser, authMiddleware };
